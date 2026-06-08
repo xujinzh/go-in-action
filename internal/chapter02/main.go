@@ -7,7 +7,7 @@ import (
 	// 让 Go 语言对包做初始化操作，但是并不使用包里的标识符
 	// 下划线让编译器接受这类导入，并且调用对应包内的所有代码文件里定义的 init 函数
 	// 调用matchers 包中的 rss.go 代码文件里的 init 函数，注册 RSS 匹配器，以便后用
-	// _ "github.com/xujinzh/go-in-action/internal/chapter02/matchers"
+	_ "github.com/xujinzh/go-in-action/internal/chapter02/matchers"
 	"github.com/xujinzh/go-in-action/internal/chapter02/search"
 )
 

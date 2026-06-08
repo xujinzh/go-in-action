@@ -1,6 +1,7 @@
 package search
 
 import (
+	"fmt"
 	"log"
 	"sync"
 )
@@ -12,6 +13,8 @@ var matchers = make(map[string]Matcher)
 func Run(searchTerm string) {
 	// 获取需要搜索的数据源列表
 	feeds, err := RetrieveFeeds()
+
+	fmt.Println("feeds len: ", len(feeds))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -28,11 +31,15 @@ func Run(searchTerm string) {
 
 	// 为每个数据源启动一个 goroutine 来查找结果
 	for _, feed := range feeds {
+		// fmt.Println("feed type:", feed.Type)
 		// 获取一个匹配器用于查找
 		matcher, exists := matchers[feed.Type]
+		// fmt.Println("matcher:", matcher)
 		if !exists {
 			matcher = matchers["default"]
 		}
+		// fmt.Println("matcher:", matcher)
+
 		// 启动一个 goroutine 来执行搜索
 		go func(matcher Matcher, feed *Feed) {
 			Match(matcher, feed, searchTerm, results)
